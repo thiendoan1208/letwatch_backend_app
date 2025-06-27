@@ -1,0 +1,15 @@
+{
+  "name": "letwatch_backend_app",
+  "version": "1.0.0",
+  "description": "Backend for Letwatch Website",
+  "keywords": [
+    "letwatch"
+  ],
+  "license": "ISC",
+  "author": "DoanThien",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
