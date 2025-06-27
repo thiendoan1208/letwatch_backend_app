@@ -2,6 +2,14 @@
   "name": "letwatch_backend_app",
   "version": "1.0.0",
   "description": "Backend for Letwatch Website",
+  "homepage": "https://github.com/thiendoan1208/letwatch_backend_app#readme",
+  "bugs": {
+    "url": "https://github.com/thiendoan1208/letwatch_backend_app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiendoan1208/letwatch_backend_app.git"
+  },
   "keywords": [
     "letwatch"
   ],
@@ -10,6 +18,22 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.6.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mysql2": "^3.14.1",
+    "nodemon": "^3.1.10",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3"
   }
 }
