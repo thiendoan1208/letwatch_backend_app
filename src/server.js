@@ -8,6 +8,10 @@ const app = express();
 const port = process.env.LETWATCH_BE_PORT || 4000;
 const hostname = process.env.LETWATCH_BE_HOSTNAME;
 
+// config body-parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Testing Sequelize connection
 connectSequelize();
 
