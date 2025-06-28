@@ -4,8 +4,9 @@
     "password": "letwatch1208",
     "database": "letwatch_database",
     "host": "localhost",
+    "port": "8080",
     "dialect": "mysql",
-     "logging": false,
+    "logging": false,
     "define": {
       "freezeTableName": true 
     }
