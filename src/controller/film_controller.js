@@ -4,17 +4,22 @@ const {
   getFilmListSortByType,
   findFilm,
   getFilmType,
-  getFilmListByType,
+  getFilmListByCategory,
   getFilmCountries,
   getFilmListByCountries,
   getFilmListByYear,
 } = require("../services/film_service");
 
+const { Vibrant } = require("node-vibrant/node");
+const { slugify } = require("../utils/modify_text");
+
 // Get new film list
 const handleGetFilmList = async (req, res) => {
   try {
     let page = req.query.page;
-    const data = await getFilmList(page);
+    let limit = req.query.limit;
+
+    const data = await getFilmList(page, limit);
 
     return res.status(200).json({
       success: data.success,
@@ -40,13 +45,71 @@ const handleGetFilmInfo = async (req, res) => {
   try {
     let filmSlug = req.params.filmSlug;
     const data = await getFilmInfo(filmSlug);
+    let posterImage = data.data.movie.poster_url;
+
+    if (posterImage && posterImage !== null) {
+      const pallete = await Vibrant.from(posterImage).getPalette();
+      return res.status(200).json({
+        success: data.success,
+        message: data.message,
+        data: data.data,
+        pallete: pallete,
+        error: data.error,
+      });
+    }
 
     return res.status(200).json({
       success: data.success,
       message: data.message,
       data: data.data,
+      pallete: null,
       error: data.error,
     });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Không thể lấy thông tin phim, vui lòng thử lại sau",
+      data: null,
+      error: {
+        code: "SERVER_ERROR",
+        details: "Không thể kết nối đến server",
+      },
+    });
+  }
+};
+
+// Get film Episode depend on server and episode slug
+const handleGetFilmEpisode = async (req, res) => {
+  try {
+    let filmSlug = req.params.filmSlug;
+    let episodeSlug = req.params.episodeSlug;
+    let serverSlugQuery = req.query.server;
+
+    const data = await getFilmInfo(filmSlug);
+
+    if (serverSlugQuery !== undefined) {
+      let serverData = data.data.episodes.find((server) => {
+        return slugify(server.server_name) === serverSlugQuery;
+      });
+
+      let filmEpisode = serverData.server_data.find((episode) => {
+        return episode.slug === episodeSlug;
+      });
+
+      return res.status(200).json({
+        success: data.success,
+        message: data.message,
+        data: filmEpisode,
+        error: data.error,
+      });
+    } else {
+      return res.status(200).json({
+        success: data.success,
+        message: data.message,
+        data: data.data.episodes[0].server_data[0],
+        error: data.error,
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -68,12 +131,7 @@ const handleGetFilmListSortByType = async (req, res) => {
 
     const data = await getFilmListSortByType(type, filterInfo);
 
-    return res.status(200).json({
-      success: data.success,
-      message: data.message,
-      data: data.data,
-      error: data.error,
-    });
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -143,7 +201,7 @@ const handleGetFilmListByType = async (req, res) => {
     let filmType = req.params.filmType;
     let filterInfo = req.query;
 
-    const data = await getFilmListByType(filmType, filterInfo);
+    const data = await getFilmListByCategory(filmType, filterInfo);
 
     return res.status(200).json({
       success: data.success,
@@ -245,6 +303,7 @@ const handleGetFilmListByYear = async (req, res) => {
 module.exports = {
   handleGetFilmList,
   handleGetFilmInfo,
+  handleGetFilmEpisode,
   handleGetFilmListSortByType,
   handleFindFilms,
   handleGetFilmType,

@@ -1,9 +1,11 @@
 const { instance: axios } = require("../config/axios");
 
 // Get new film list
-const getFilmList = async (page) => {
+const getFilmList = async (page, limit) => {
   try {
-    let data = await axios.get(`/danh-sach/phim-moi-cap-nhat?page=${page}`);
+    let data = await axios.get(
+      `/danh-sach/phim-moi-cap-nhat-v2?page=${page}&limit=${limit}`
+    );
     // Ví dụ V2: GET https://phimapi.com/danh-sach/phim-moi-cap-nhat-v2?page=1
     // Ví dụ V3: GET https://phimapi.com/danh-sach/phim-moi-cap-nhat-v3?page=1
 
@@ -56,7 +58,7 @@ const getFilmListSortByType = async (type, filterInfo) => {
     // reconstruct url
     let newInfo = {};
     for (const [key, value] of Object.entries(filterInfo)) {
-      if (key && value !== "") {
+      if (key && value !== "" && value !== "no") {
         newInfo[key] = value;
       }
     }
@@ -144,7 +146,7 @@ const getFilmType = async () => {
   }
 };
 
-const getFilmListByType = async (type, filterInfo) => {
+const getFilmListByCategory = async (type, filterInfo) => {
   try {
     // reconstruct url
     let newInfo = {};
@@ -276,7 +278,7 @@ module.exports = {
   getFilmListSortByType,
   findFilm,
   getFilmType,
-  getFilmListByType,
+  getFilmListByCategory,
   getFilmCountries,
   getFilmListByCountries,
   getFilmListByYear,
