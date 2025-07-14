@@ -12,6 +12,8 @@ const {
   handleGetFilmListByYear,
 } = require("../controller/film_controller");
 
+const { handleSendVerifyCode, handleSignUp } = require("../controller/authen_controller");
+
 const apiRoutes = express.Router();
 
 /* Handle Film API */
@@ -22,8 +24,8 @@ apiRoutes.get("/category/new-film-list", handleGetFilmList);
 apiRoutes.get("/category/:type", handleGetFilmListSortByType);
 // Specific movie information and film episode
 apiRoutes.get("/film/:filmSlug", handleGetFilmInfo);
-// Get film Episode depend on server and episode slug 
-apiRoutes.get("/film/:filmSlug/:episodeSlug", handleGetFilmEpisode)
+// Get film Episode depend on server and episode slug
+apiRoutes.get("/film/:filmSlug/:episodeSlug", handleGetFilmEpisode);
 // Find films
 apiRoutes.get("/find-film", handleFindFilms);
 // All film type
@@ -36,6 +38,13 @@ apiRoutes.get("/all-film-countries", handleGetAllCountries);
 apiRoutes.get("/film-country/:filmCountry", handleGetFilmListByCountry);
 // Specific film by year
 apiRoutes.get("/film-year/:year", handleGetFilmListByYear);
+
+/* Handle Authentication */
+
+// Send code when sign up
+apiRoutes.post("/auth/verify-code", handleSendVerifyCode);
+// Sign Up
+apiRoutes.post("/auth/sign-up", handleSignUp);
 
 module.exports = {
   apiRoutes,
