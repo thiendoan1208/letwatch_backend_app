@@ -12,7 +12,13 @@ const {
   handleGetFilmListByYear,
 } = require("../controller/film_controller");
 
-const { handleSendVerifyCode, handleSignUp } = require("../controller/authen_controller");
+const {
+  handleSendVerifyCode,
+  handleSignUp,
+  handleSignIn,
+  handleGetUserInfo,
+  handleSignOut,
+} = require("../controller/authen_controller");
 
 const apiRoutes = express.Router();
 
@@ -45,6 +51,15 @@ apiRoutes.get("/film-year/:year", handleGetFilmListByYear);
 apiRoutes.post("/auth/verify-code", handleSendVerifyCode);
 // Sign Up
 apiRoutes.post("/auth/sign-up", handleSignUp);
+
+// Sign In
+apiRoutes.post("/auth/sign-in", handleSignIn);
+
+// Sign out
+apiRoutes.post("/auth/sign-out", handleSignOut);
+
+// Me
+apiRoutes.get("/me", handleGetUserInfo);
 
 module.exports = {
   apiRoutes,

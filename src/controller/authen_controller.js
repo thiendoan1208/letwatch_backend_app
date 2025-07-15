@@ -1,6 +1,10 @@
 const { Resend } = require("resend");
 const { config } = require("dotenv");
-const { createUser } = require("../services/authen_service");
+const {
+  createUser,
+  signIn,
+  getUserInfo,
+} = require("../services/authen_service");
 config();
 
 const CODE_LENGTH = 900000;
@@ -42,11 +46,20 @@ const handleSignUp = async (req, res) => {
 
     if (String(saveCode) === String(userVerifyCode)) {
       const data = await createUser(userInfo);
+      if (data) {
+        return res.status(200).json({
+          success: data.success,
+          message: data.message,
+          data: data.data,
+          error: data.error,
+        });
+      }
+    } else {
       return res.status(200).json({
-        success: data.success,
-        message: data.message,
-        data: data.data,
-        error: data.error,
+        success: false,
+        message: "Mã xác minh không chính xác",
+        data: [],
+        error: "INVALID_VERIFY_CODE",
       });
     }
   } catch (error) {
@@ -62,7 +75,96 @@ const handleSignUp = async (req, res) => {
   }
 };
 
+// Sign In User
+const handleSignIn = async (req, res) => {
+  try {
+    let userInfo = req.body;
+    let data = await signIn(userInfo);
+
+    if (data && data.success) {
+      res.cookie("access_token", data.data.jwt, {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+    }
+
+    return res.status(200).json({
+      success: data.success,
+      message: data.message,
+      data: data.data.userInfoDB,
+      error: data.error,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể đăng nhập. Vui lòng thử lại sau.",
+      data: null,
+      error: {
+        code: "SERVER_ERROR",
+        details: "Không thể kết nối đến server",
+      },
+    });
+  }
+};
+
+const handleSignOut = async (req, res) => {
+  try {
+    await res.clearCookie("access_token");
+    return res.status(200).json({
+      success: true,
+      message: "Đăng xuất thành công.",
+      data: null,
+      error: null,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể đăng xuất.",
+      data: null,
+      error: "SIGN_OUT_ERROR",
+    });
+  }
+};
+
+// Get user info
+const handleGetUserInfo = (req, res) => {
+  try {
+    let access_token = req.cookies.access_token;
+
+    if (access_token) {
+      let data = getUserInfo(access_token);
+
+      return res.status(200).json({
+        success: data.success,
+        message: data.message,
+        data: data.data,
+        error: data.error,
+      });
+    }
+
+    return res.status(200).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể lấy thông tin người dùng.",
+      data: null,
+      error: "GET_USER_INFORMATION_ERROR",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể lấy thông tin người dùng.",
+      data: null,
+      error: {
+        code: "SERVER_ERROR",
+        details: "Không thể kết nối đến server",
+      },
+    });
+  }
+};
+
 module.exports = {
   handleSendVerifyCode,
   handleSignUp,
+  handleSignIn,
+  handleGetUserInfo,
+  handleSignOut,
 };

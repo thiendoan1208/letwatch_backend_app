@@ -2,6 +2,7 @@ const express = require("express");
 const { config } = require("dotenv");
 const { apiRoutes } = require("./routes/API_routes");
 const { configCORS } = require("../src/config/cors");
+const cookieParser = require("cookie-parser");
 const { connectSequelize } = require("./config/sequelize_db_orm");
 config();
 
@@ -14,6 +15,9 @@ configCORS(app);
 // config body-parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// config cookie-parser
+app.use(cookieParser());
 
 // Testing Sequelize connection
 connectSequelize();
