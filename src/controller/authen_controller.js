@@ -5,6 +5,7 @@ const {
   signIn,
   getUserInfo,
   reNewAccessToken,
+  recoverPassWord,
 } = require("../services/authen_service");
 config();
 
@@ -119,14 +120,14 @@ const handleSignOut = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Đăng xuất thành công.",
-      data: null,
+      data: [],
       error: null,
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể đăng xuất.",
-      data: null,
+      data: [],
       error: "SIGN_OUT_ERROR",
     });
   }
@@ -184,7 +185,7 @@ const handleRefeshToken = (req, res) => {
       return res.status(200).json({
         success: data.success,
         message: data.message,
-        data: null,
+        data: [],
         error: data.error,
       });
     }
@@ -192,14 +193,62 @@ const handleRefeshToken = (req, res) => {
     return res.status(200).json({
       success: false,
       message: "Không re-new dc access_token",
-      data: null,
+      data: [],
       error: "RENEW_ACCESS_TOKEN_ERROR",
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể lấy thông tin người dùng.",
+      data: [],
+      error: {
+        code: "SERVER_ERROR",
+        details: "Không thể kết nối đến server",
+      },
+    });
+  }
+};
+
+const handleCheckRecoverCode = (req, res) => {
+  let saveCode = VERIFY_CODE;
+  let userVerifyCode = req.body.verifyCode;
+  let userEmail = req.body.email;
+
+  if (String(saveCode) === String(userVerifyCode)) {
+    return res.status(200).json({
+      success: true,
+      message: "Mã xác minh đã khớp",
+      data: {
+        email: userEmail,
+      },
+      error: null,
+    });
+  } else {
+    return res.status(200).json({
+      success: false,
+      message: "Mã xác minh không chính xác",
       data: null,
+      error: "INVALID_VERIFY_CODE",
+    });
+  }
+};
+
+const handleRecoverPassWord = async (req, res) => {
+  try {
+    let userInfo = req.body;
+    let data = await recoverPassWord(userInfo);
+
+    return res.status(200).json({
+      success: data.success,
+      message: data.message,
+      data: data.data,
+      error: data.error,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể cập nhật mật khẩu.",
+      data: [],
       error: {
         code: "SERVER_ERROR",
         details: "Không thể kết nối đến server",
@@ -215,4 +264,6 @@ module.exports = {
   handleGetUserInfo,
   handleSignOut,
   handleRefeshToken,
+  handleCheckRecoverCode,
+  handleRecoverPassWord,
 };

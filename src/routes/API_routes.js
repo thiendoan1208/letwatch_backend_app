@@ -19,6 +19,8 @@ const {
   handleGetUserInfo,
   handleSignOut,
   handleRefeshToken,
+  handleCheckRecoverCode,
+  handleRecoverPassWord,
 } = require("../controller/authen_controller");
 
 const apiRoutes = express.Router();
@@ -57,10 +59,16 @@ apiRoutes.post("/auth/sign-up", handleSignUp);
 apiRoutes.post("/auth/sign-in", handleSignIn);
 
 // Sign out
-apiRoutes.post("/auth/sign-out", handleSignOut);
+apiRoutes.delete("/auth/sign-out", handleSignOut);
 
 // Refresh token
 apiRoutes.post("/auth/refresh-token", handleRefeshToken);
+
+// Check Recover Password
+apiRoutes.post("/auth/check-recover-code", handleCheckRecoverCode);
+
+// Recover password
+apiRoutes.patch("/auth/recover", handleRecoverPassWord);
 
 // Me
 apiRoutes.get("/me", handleGetUserInfo);

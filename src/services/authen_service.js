@@ -7,28 +7,39 @@ const {
   verifyJWT,
   createRefreshToken,
 } = require("../middleware/jwt");
+const { where } = require("sequelize");
 config();
 
 const checkEmailDB = async (email) => {
-  let dbEmail = await db.User.findAll({
-    attributes: ["email"],
-    raw: true,
-  });
+  try {
+    let dbEmail = await db.User.findAll({
+      attributes: ["email"],
+      raw: true,
+    });
 
-  let emailArray = dbEmail.map((email) => email.email);
-  let checkEmail = emailArray.includes(email);
-  return checkEmail;
+    let emailArray = dbEmail.map((email) => email.email);
+    let checkEmail = emailArray.includes(email);
+    return checkEmail;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
 };
 
 const checkUsernameDB = async (username) => {
-  let dbUsername = await db.User.findAll({
-    attributes: ["username"],
-    raw: true,
-  });
-  let usernameArray = dbUsername.map((username) => username.username);
-  let checkUsername = usernameArray.includes(username);
+  try {
+    let dbUsername = await db.User.findAll({
+      attributes: ["username"],
+      raw: true,
+    });
+    let usernameArray = dbUsername.map((username) => username.username);
+    let checkUsername = usernameArray.includes(username);
 
-  return checkUsername;
+    return checkUsername;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
 };
 
 const checkPassword = (userPassword, hashPassword) => {
@@ -280,9 +291,38 @@ const reNewAccessToken = (refresh_token) => {
   };
 };
 
+const recoverPassWord = async (userInfo) => {
+  try {
+    let encryptPassword = await hashPassword(userInfo.password);
+    await db.User.update(
+      { password: encryptPassword },
+      {
+        where: {
+          email: userInfo.email,
+        },
+      }
+    );
+
+    return {
+      success: true,
+      message: "Cập nhật mật khẩu thành công.",
+      data: [],
+      error: null,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Có lỗi xảy ra khi cập nhật mật khẩu.",
+      data: null,
+      error: "UPDATE_PASSWORD_ERROR",
+    };
+  }
+};
+
 module.exports = {
   createUser,
   signIn,
   getUserInfo,
   reNewAccessToken,
+  recoverPassWord,
 };
