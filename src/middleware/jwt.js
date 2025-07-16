@@ -2,14 +2,22 @@ const jwt = require("jsonwebtoken");
 const { config } = require("dotenv");
 config();
 
-const securePath = ["/admin"];
+const createAccessToken = (payload) => {
+  try {
+    let token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+    return token;
+  } catch (error) {
+    console.log("Error when create JWT");
+    return null;
+  }
+};
 
-const createJWt = (payload) => {
+const createRefreshToken = (payload) => {
   try {
     let token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
     return token;
   } catch (error) {
-    console.log("Error when create JWT");
+    console.log("Error when create rf JWT");
     return null;
   }
 };
@@ -25,6 +33,7 @@ const verifyJWT = (token) => {
 };
 
 module.exports = {
-  createJWt,
+  createAccessToken,
+  createRefreshToken,
   verifyJWT,
 };

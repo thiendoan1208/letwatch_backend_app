@@ -18,6 +18,7 @@ const {
   handleSignIn,
   handleGetUserInfo,
   handleSignOut,
+  handleRefeshToken,
 } = require("../controller/authen_controller");
 
 const apiRoutes = express.Router();
@@ -57,6 +58,9 @@ apiRoutes.post("/auth/sign-in", handleSignIn);
 
 // Sign out
 apiRoutes.post("/auth/sign-out", handleSignOut);
+
+// Refresh token
+apiRoutes.post("/auth/refresh-token", handleRefeshToken);
 
 // Me
 apiRoutes.get("/me", handleGetUserInfo);

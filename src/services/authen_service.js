@@ -2,7 +2,11 @@ const db = require("../models/index");
 const { hashPassword } = require("../utils/hass_password");
 const bcrypt = require("bcrypt");
 const { config } = require("dotenv");
-const { createJWt, verifyJWT } = require("../middleware/jwt");
+const {
+  createAccessToken,
+  verifyJWT,
+  createRefreshToken,
+} = require("../middleware/jwt");
 config();
 
 const checkEmailDB = async (email) => {
@@ -136,13 +140,15 @@ const signIn = async (userInfo) => {
             email: userInfoDB.email,
             role: userInfoDB.roleID,
           };
-          let jwt = createJWt(payload);
+          let accessTokenJWT = createAccessToken(payload);
+          let refreshTokenJWT = createRefreshToken(payload);
 
           return {
             success: true,
             message: "Đăng nhập thành công.",
             data: {
-              jwt,
+              refreshTokenJWT,
+              accessTokenJWT,
               userInfoDB: {
                 id: userInfoDB.id,
                 email: userInfoDB.email,
@@ -181,13 +187,15 @@ const signIn = async (userInfo) => {
             email: userInfoDB.email,
             role: userInfoDB.roleID,
           };
-          let jwt = createJWt(payload);
+          let accessTokenJWT = createAccessToken(payload);
+          let refreshTokenJWT = createRefreshToken(payload);
 
           return {
             success: true,
             message: "Đăng nhập thành công.",
             data: {
-              jwt,
+              refreshTokenJWT,
+              accessTokenJWT,
               userInfoDB: {
                 id: userInfoDB.id,
                 email: userInfoDB.email,
@@ -244,8 +252,37 @@ const getUserInfo = (access_token) => {
   };
 };
 
+const reNewAccessToken = (refresh_token) => {
+  let checkRefreshToken = verifyJWT(refresh_token);
+  if (checkRefreshToken !== null) {
+    let newAcessToken = createAccessToken({
+      id: checkRefreshToken.id,
+      email: checkRefreshToken.email,
+      username: checkRefreshToken.username,
+      role: checkRefreshToken.role,
+    });
+
+    return {
+      success: true,
+      message: "re-new token thành công",
+      data: {
+        access_token: newAcessToken,
+      },
+      error: null,
+    };
+  }
+
+  return {
+    success: false,
+    message: "Không re-new được token.",
+    data: null,
+    error: "RENEW_ACCESS_TOKEN_ERROR",
+  };
+};
+
 module.exports = {
   createUser,
   signIn,
   getUserInfo,
+  reNewAccessToken,
 };

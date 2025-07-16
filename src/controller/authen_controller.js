@@ -4,6 +4,7 @@ const {
   createUser,
   signIn,
   getUserInfo,
+  reNewAccessToken,
 } = require("../services/authen_service");
 config();
 
@@ -82,7 +83,11 @@ const handleSignIn = async (req, res) => {
     let data = await signIn(userInfo);
 
     if (data && data.success) {
-      res.cookie("access_token", data.data.jwt, {
+      res.cookie("access_token", data.data.accessTokenJWT, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+      });
+      res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
@@ -110,6 +115,7 @@ const handleSignIn = async (req, res) => {
 const handleSignOut = async (req, res) => {
   try {
     await res.clearCookie("access_token");
+    await res.clearCookie("refresh_token");
     return res.status(200).json({
       success: true,
       message: "Đăng xuất thành công.",
@@ -161,10 +167,52 @@ const handleGetUserInfo = (req, res) => {
   }
 };
 
+const handleRefeshToken = (req, res) => {
+  try {
+    let refresh_token = req.cookies.refresh_token;
+
+    if (refresh_token) {
+      let data = reNewAccessToken(refresh_token);
+
+      if (data && data.success) {
+        res.cookie("access_token", data.data.access_token, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 1000,
+        });
+      }
+
+      return res.status(200).json({
+        success: data.success,
+        message: data.message,
+        data: null,
+        error: data.error,
+      });
+    }
+
+    return res.status(200).json({
+      success: false,
+      message: "Không re-new dc access_token",
+      data: null,
+      error: "RENEW_ACCESS_TOKEN_ERROR",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể lấy thông tin người dùng.",
+      data: null,
+      error: {
+        code: "SERVER_ERROR",
+        details: "Không thể kết nối đến server",
+      },
+    });
+  }
+};
+
 module.exports = {
   handleSendVerifyCode,
   handleSignUp,
   handleSignIn,
   handleGetUserInfo,
   handleSignOut,
+  handleRefeshToken,
 };
