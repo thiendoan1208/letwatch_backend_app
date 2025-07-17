@@ -1,5 +1,5 @@
 "use strict";
-const { Model, DATE } = require("sequelize");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class UserWatchList extends Model {
     /**
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      UserWatchList.belongsTo(models.User, {foreignKey: "userID"});
+      UserWatchList.belongsTo(models.User, { foreignKey: "userID" });
     }
   }
   UserWatchList.init(
@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       movieTitle: DataTypes.STRING,
       movieSlug: DataTypes.STRING,
       moviePoster: DataTypes.STRING,
-      addedAt: DataTypes.STRING,
     },
     {
       sequelize,

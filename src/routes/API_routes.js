@@ -23,6 +23,11 @@ const {
   handleRecoverPassWord,
 } = require("../controller/authen_controller");
 
+const {
+  handleAddFilmToWatchlist,
+  handleGetFilmFromPlayList,
+} = require("../controller/personal_controller");
+
 const apiRoutes = express.Router();
 
 /* Handle Film API */
@@ -54,24 +59,24 @@ apiRoutes.get("/film-year/:year", handleGetFilmListByYear);
 apiRoutes.post("/auth/verify-code", handleSendVerifyCode);
 // Sign Up
 apiRoutes.post("/auth/sign-up", handleSignUp);
-
 // Sign In
 apiRoutes.post("/auth/sign-in", handleSignIn);
-
 // Sign out
 apiRoutes.delete("/auth/sign-out", handleSignOut);
-
 // Refresh token
 apiRoutes.post("/auth/refresh-token", handleRefeshToken);
-
 // Check Recover Password
 apiRoutes.post("/auth/check-recover-code", handleCheckRecoverCode);
-
 // Recover password
 apiRoutes.patch("/auth/recover", handleRecoverPassWord);
-
 // Me
 apiRoutes.get("/me", handleGetUserInfo);
+
+/* Personal */
+// Add Film to watchlist
+apiRoutes.post("/personal/add-to-watchlist", handleAddFilmToWatchlist);
+// Get all film in watchlist
+apiRoutes.get("/personal/get-film-from-watchlist", handleGetFilmFromPlayList);
 
 module.exports = {
   apiRoutes,
