@@ -1,6 +1,7 @@
 const {
   addFilmToWatchlist,
   getFilmFromWatchList,
+  deleteFilmFromWatchList,
 } = require("../services/personal_service");
 
 const handleAddFilmToWatchlist = async (req, res) => {
@@ -75,7 +76,31 @@ const handleGetFilmFromPlayList = async (req, res) => {
   }
 };
 
+const handleDeleteFilmFromWatchList = async (req, res) => {
+  try {
+    let data = await deleteFilmFromWatchList(req.body);
+
+    return res.status(200).json({
+      success: data.success,
+      message: data.message,
+      data: data.data,
+      error: data.error,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra, không thể xóa danh sách phim.",
+      data: null,
+      error: {
+        code: "SERVER_ERROR",
+        details: "Không thể kết nối đến server",
+      },
+    });
+  }
+};
+
 module.exports = {
   handleAddFilmToWatchlist,
   handleGetFilmFromPlayList,
+  handleDeleteFilmFromWatchList,
 };

@@ -58,8 +58,6 @@ const getFilmFromWatchList = async (userID) => {
       raw: true,
     });
 
-    console.log(data);
-
     return {
       success: true,
       message: "Lấy danh sách thành công.",
@@ -77,7 +75,35 @@ const getFilmFromWatchList = async (userID) => {
   }
 };
 
+const deleteFilmFromWatchList = async (deleteInfo) => {
+  try {
+    await db.UserWatchList.destroy({
+      where: {
+        movieSlug: deleteInfo.filmDeleteList,
+        userID: deleteInfo.userID,
+      },
+      raw: true,
+    });
+
+    return {
+      success: true,
+      message: "Xóa phim thành công.",
+      data: [],
+      error: null,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Không thể xóa phim.",
+      data: [],
+      error: "SERVER_ERROR",
+    };
+  }
+};
+
 module.exports = {
   addFilmToWatchlist,
   getFilmFromWatchList,
+  deleteFilmFromWatchList,
 };

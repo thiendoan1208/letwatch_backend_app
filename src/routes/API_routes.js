@@ -26,6 +26,7 @@ const {
 const {
   handleAddFilmToWatchlist,
   handleGetFilmFromPlayList,
+  handleDeleteFilmFromWatchList,
 } = require("../controller/personal_controller");
 
 const apiRoutes = express.Router();
@@ -77,6 +78,11 @@ apiRoutes.get("/me", handleGetUserInfo);
 apiRoutes.post("/personal/add-to-watchlist", handleAddFilmToWatchlist);
 // Get all film in watchlist
 apiRoutes.get("/personal/get-film-from-watchlist", handleGetFilmFromPlayList);
+// Delete film in watchlist
+apiRoutes.delete(
+  "/personal/delete-film-from-watchlist",
+  handleDeleteFilmFromWatchList
+);
 
 module.exports = {
   apiRoutes,
