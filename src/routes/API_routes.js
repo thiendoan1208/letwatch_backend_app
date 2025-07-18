@@ -29,6 +29,10 @@ const {
   handleDeleteFilmFromWatchList,
 } = require("../controller/personal_controller");
 
+const {
+  handleSendContributeForm,
+} = require("../controller/contribute_controller");
+
 const apiRoutes = express.Router();
 
 /* Handle Film API */
@@ -83,6 +87,9 @@ apiRoutes.delete(
   "/personal/delete-film-from-watchlist",
   handleDeleteFilmFromWatchList
 );
+
+/** Contribute */
+apiRoutes.post("/contribute/send-form", handleSendContributeForm);
 
 module.exports = {
   apiRoutes,
