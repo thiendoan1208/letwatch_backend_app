@@ -1,7 +1,8 @@
 const {
   getAllUser,
+  deleteUser,
   getAllContributeForm,
-  updateContributeForms,
+  updateContributeForm,
 } = require("../services/admin_services");
 
 const handleGetAllUser = async (req, res) => {
@@ -17,6 +18,25 @@ const handleGetAllUser = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Cannot get user information",
+      data: [],
+      error: "USER_ERROR",
+    });
+  }
+};
+
+const handleDeleteUser = async (req, res) => {
+  try {
+    let data = await deleteUser(req.body);
+    return res.status(200).json({
+      success: data.success,
+      data: data.data,
+      message: data.message,
+      error: data.error,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Cannot delete users.",
       data: [],
       error: "USER_ERROR",
     });
@@ -42,9 +62,9 @@ const handleGetAllContributeForm = async (req, res) => {
   }
 };
 
-const handleUpdateContributeForms = async (req, res) => {
+const handleUpdateContributeForm = async (req, res) => {
   try {
-    let data = await updateContributeForms(req.body);
+    let data = await updateContributeForm(req.body);
     return res.status(200).json({
       success: data.success,
       data: data.data,
@@ -63,6 +83,7 @@ const handleUpdateContributeForms = async (req, res) => {
 
 module.exports = {
   handleGetAllUser,
+  handleDeleteUser,
   handleGetAllContributeForm,
-  handleUpdateContributeForms,
+  handleUpdateContributeForm,
 };

@@ -36,7 +36,8 @@ const {
 const {
   handleGetAllUser,
   handleGetAllContributeForm,
-  handleUpdateContributeForms,
+  handleUpdateContributeForm,
+  handleDeleteUser,
 } = require("../controller/admin_controller");
 
 const apiRoutes = express.Router();
@@ -100,11 +101,13 @@ apiRoutes.post("/contribute/send-form", handleSendContributeForm);
 /* Admin */
 
 // Get all user
-apiRoutes.get("/admin/get-all-user", handleGetAllUser);
+apiRoutes.get("/admin/users", handleGetAllUser);
+// Delete user
+apiRoutes.delete("/admin/users/delete", handleDeleteUser);
 // Get all contribute form
 apiRoutes.get("/admin/get-all-contribute-form", handleGetAllContributeForm);
 // Update contribute forms status
-apiRoutes.post("/admin/update-contribute-forms", handleUpdateContributeForms);
+apiRoutes.post("/admin/update-contribute-forms", handleUpdateContributeForm);
 
 module.exports = {
   apiRoutes,

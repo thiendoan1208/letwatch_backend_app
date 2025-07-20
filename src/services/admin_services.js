@@ -22,6 +22,31 @@ const getAllUser = async () => {
   }
 };
 
+const deleteUser = async (deleteInfo) => {
+  try {
+    await db.User.destroy({
+      where: {
+        email: deleteInfo,
+      },
+      raw: true,
+    });
+
+    return {
+      success: true,
+      message: "Xóa user thành công.",
+      data: [],
+      error: null,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Không thể xóa user.",
+      data: [],
+      error: "SERVER_ERROR",
+    };
+  }
+};
 const getAllContributeForm = async () => {
   try {
     let data = await db.UserReview.findAll({
@@ -43,7 +68,7 @@ const getAllContributeForm = async () => {
   }
 };
 
-const updateContributeForms = async (formArr) => {
+const updateContributeForm = async (formArr) => {
   try {
     for (const form of formArr) {
       await db.UserReview.update(
@@ -70,6 +95,7 @@ const updateContributeForms = async (formArr) => {
 
 module.exports = {
   getAllUser,
+  deleteUser,
   getAllContributeForm,
-  updateContributeForms,
+  updateContributeForm,
 };
