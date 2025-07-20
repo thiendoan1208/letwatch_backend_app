@@ -33,6 +33,12 @@ const {
   handleSendContributeForm,
 } = require("../controller/contribute_controller");
 
+const {
+  handleGetAllUser,
+  handleGetAllContributeForm,
+  handleUpdateContributeForms,
+} = require("../controller/admin_controller");
+
 const apiRoutes = express.Router();
 
 /* Handle Film API */
@@ -88,8 +94,17 @@ apiRoutes.delete(
   handleDeleteFilmFromWatchList
 );
 
-/** Contribute */
+/* Contribute */
 apiRoutes.post("/contribute/send-form", handleSendContributeForm);
+
+/* Admin */
+
+// Get all user
+apiRoutes.get("/admin/get-all-user", handleGetAllUser);
+// Get all contribute form
+apiRoutes.get("/admin/get-all-contribute-form", handleGetAllContributeForm);
+// Update contribute forms status
+apiRoutes.post("/admin/update-contribute-forms", handleUpdateContributeForms);
 
 module.exports = {
   apiRoutes,

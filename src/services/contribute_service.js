@@ -6,6 +6,7 @@ const createContributeForm = async (form) => {
       userID: form.userID,
       description: form.description,
       type: form.type,
+      status: form.status,
     });
 
     return {
