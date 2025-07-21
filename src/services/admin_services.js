@@ -1,4 +1,5 @@
 const db = require("../models/index");
+const { Op, where } = require("sequelize");
 
 const getAllUser = async () => {
   try {
@@ -16,6 +17,34 @@ const getAllUser = async () => {
     return {
       success: false,
       message: "Cannot get user, server error.",
+      data: [],
+      error: "SERVER_ERROR",
+    };
+  }
+};
+
+const findUser = async (keyword) => {
+  try {
+    let data = await db.User.findAll({
+      where: {
+        email: {
+          [Op.substring]: keyword,
+        },
+      },
+      attributes: ["id", "email", "username", "createdAt", "updatedAt"],
+      raw: true,
+    });
+
+    return {
+      success: true,
+      message: "find user successfully.",
+      data: data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Cannot find user, server error.",
       data: [],
       error: "SERVER_ERROR",
     };
@@ -95,6 +124,7 @@ const updateContributeForm = async (formArr) => {
 
 module.exports = {
   getAllUser,
+  findUser,
   deleteUser,
   getAllContributeForm,
   updateContributeForm,

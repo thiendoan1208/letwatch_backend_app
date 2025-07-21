@@ -1,5 +1,6 @@
 const {
   getAllUser,
+  findUser,
   deleteUser,
   getAllContributeForm,
   updateContributeForm,
@@ -18,6 +19,25 @@ const handleGetAllUser = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Cannot get user information",
+      data: [],
+      error: "USER_ERROR",
+    });
+  }
+};
+
+const handleFindUser = async (req, res) => {
+  try {
+    let data = await findUser(req.body.keyword);
+    return res.status(200).json({
+      success: data.success,
+      data: data.data,
+      message: data.message,
+      error: data.error,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Cannot find user information",
       data: [],
       error: "USER_ERROR",
     });
@@ -83,6 +103,7 @@ const handleUpdateContributeForm = async (req, res) => {
 
 module.exports = {
   handleGetAllUser,
+  handleFindUser,
   handleDeleteUser,
   handleGetAllContributeForm,
   handleUpdateContributeForm,
