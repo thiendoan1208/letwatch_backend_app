@@ -1,16 +1,23 @@
 const db = require("../models/index");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
-const getAllUser = async () => {
+const getAllUser = async (limit, page) => {
   try {
-    let data = await db.User.findAll({
+    let offset = (page - 1) * limit;
+    let { count, rows } = await db.User.findAndCountAll({
       attributes: ["id", "email", "username", "createdAt", "updatedAt"],
       raw: true,
+      offset: +offset,
+      limit: +limit,
     });
+
     return {
       success: true,
       message: "Get user successfully.",
-      data: data,
+      data: {
+        totalPage: Math.ceil(count / limit),
+        userList: rows,
+      },
       error: null,
     };
   } catch (error) {

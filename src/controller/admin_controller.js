@@ -8,7 +8,7 @@ const {
 
 const handleGetAllUser = async (req, res) => {
   try {
-    let data = await getAllUser();
+    let data = await getAllUser(req.query.limit, req.query.page);
     return res.status(200).json({
       success: data.success,
       data: data.data,
