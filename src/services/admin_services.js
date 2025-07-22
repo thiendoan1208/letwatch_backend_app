@@ -15,8 +15,9 @@ const getAllUser = async (limit, page) => {
       success: true,
       message: "Get user successfully.",
       data: {
-        totalPage: Math.ceil(count / limit),
         userList: rows,
+        totalPage: Math.ceil(count / limit),
+        totalUser: count,
       },
       error: null,
     };
@@ -60,16 +61,24 @@ const findUser = async (keyword) => {
 
 const deleteUser = async (deleteInfo) => {
   try {
-    await db.User.destroy({
-      where: {
-        email: deleteInfo,
-      },
-      raw: true,
-    });
+    if (deleteInfo.length > 0) {
+      await db.User.destroy({
+        where: {
+          email: deleteInfo,
+        },
+        raw: true,
+      });
+      return {
+        success: true,
+        message: "Delete user success.",
+        data: [],
+        error: null,
+      };
+    }
 
     return {
       success: true,
-      message: "Xóa user thành công.",
+      message: "Nothing changed.",
       data: [],
       error: null,
     };
@@ -77,7 +86,7 @@ const deleteUser = async (deleteInfo) => {
     console.log(error);
     return {
       success: false,
-      message: "Không thể xóa user.",
+      message: "Cannot delete user.",
       data: [],
       error: "SERVER_ERROR",
     };
@@ -129,10 +138,45 @@ const updateContributeForm = async (formArr) => {
   }
 };
 
+const deleteContributeForm = async (formIDArr) => {
+  try {
+    if (formIDArr.length > 0) {
+      await db.UserReview.destroy({
+        where: {
+          id: formIDArr,
+        },
+        raw: true,
+      });
+      return {
+        success: true,
+        message: "Delete form success.",
+        data: [],
+        error: null,
+      };
+    }
+
+    return {
+      success: true,
+      message: "Nothing changed.",
+      data: [],
+      error: null,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Cannot delete form.",
+      data: [],
+      error: "SERVER_ERROR",
+    };
+  }
+};
+
 module.exports = {
   getAllUser,
   findUser,
   deleteUser,
   getAllContributeForm,
   updateContributeForm,
+  deleteContributeForm,
 };

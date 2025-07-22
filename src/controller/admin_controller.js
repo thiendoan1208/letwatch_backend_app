@@ -4,6 +4,7 @@ const {
   deleteUser,
   getAllContributeForm,
   updateContributeForm,
+  deleteContributeForm,
 } = require("../services/admin_services");
 
 const handleGetAllUser = async (req, res) => {
@@ -101,10 +102,30 @@ const handleUpdateContributeForm = async (req, res) => {
   }
 };
 
+const handlDeleteContributeForm = async (req, res) => {
+  try {
+    let data = await deleteContributeForm(req.body);
+    return res.status(200).json({
+      success: data.success,
+      data: data.data,
+      message: data.message,
+      error: data.error,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Cannot delete contribute form",
+      data: [],
+      error: "FORM_ERROR",
+    });
+  }
+};
+
 module.exports = {
   handleGetAllUser,
   handleFindUser,
   handleDeleteUser,
   handleGetAllContributeForm,
   handleUpdateContributeForm,
+  handlDeleteContributeForm,
 };
