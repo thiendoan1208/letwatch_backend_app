@@ -21,7 +21,7 @@ const createContributeForm = async (form) => {
     return {
       success: false,
       message: "Không thể tạo biểu mẫu.",
-      data: null,
+      data: [],
       error: {
         code: "SERVER_ERROR",
         details: "Không thể kết nối đến server",

@@ -80,22 +80,19 @@ apiRoutes.delete("/auth/sign-out", handleSignOut);
 // Refresh token
 apiRoutes.post("/auth/refresh-token", handleRefeshToken);
 // Check Recover Password
-apiRoutes.post("/auth/check-recover-code", handleCheckRecoverCode);
+apiRoutes.post("/auth/recover-code/check", handleCheckRecoverCode);
 // Recover password
 apiRoutes.patch("/auth/recover", handleRecoverPassWord);
 // Me
 apiRoutes.get("/me", handleGetUserInfo);
 
 /* Personal */
-// Add Film to watchlist
-apiRoutes.post("/personal/add-to-watchlist", handleAddFilmToWatchlist);
 // Get all film in watchlist
-apiRoutes.get("/personal/get-film-from-watchlist", handleGetFilmFromPlayList);
+apiRoutes.get("/personal/watchlist", handleGetFilmFromPlayList);
+// Add Film to watchlist
+apiRoutes.post("/personal/watchlist/add", handleAddFilmToWatchlist);
 // Delete film in watchlist
-apiRoutes.delete(
-  "/personal/delete-film-from-watchlist",
-  handleDeleteFilmFromWatchList
-);
+apiRoutes.delete("/personal/watchlist/delete", handleDeleteFilmFromWatchList);
 
 /* Contribute */
 apiRoutes.post("/contribute/send-form", handleSendContributeForm);
@@ -109,9 +106,9 @@ apiRoutes.post("/admin/users/find", handleFindUser);
 // Delete user
 apiRoutes.delete("/admin/users/delete", handleDeleteUser);
 // Get all contribute form
-apiRoutes.get("/admin/get-all-contribute-form", handleGetAllContributeForm);
+apiRoutes.get("/admin/contribute-form", handleGetAllContributeForm);
 // Update contribute forms status
-apiRoutes.post("/admin/update-contribute-forms", handleUpdateContributeForm);
+apiRoutes.post("/admin/contribute-form/update", handleUpdateContributeForm);
 // Delete contribute form
 apiRoutes.delete("/admin/contribute-form/delete", handlDeleteContributeForm);
 

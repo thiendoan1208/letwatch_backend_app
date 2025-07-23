@@ -128,7 +128,7 @@ const updateContributeForm = async (formArr) => {
     return {
       success: true,
       message: "update contribute form successfully.",
-      data: data,
+      data: [],
       error: null,
     };
   } catch (error) {
@@ -153,7 +153,7 @@ const deleteContributeForm = async (formIDArr) => {
       });
       return {
         success: true,
-        message: "Delete form success.",
+        message: "Delete form successfully.",
         data: [],
         error: null,
       };

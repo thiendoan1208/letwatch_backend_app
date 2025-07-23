@@ -314,7 +314,7 @@ const recoverPassWord = async (userInfo) => {
     return {
       success: false,
       message: "Có lỗi xảy ra khi cập nhật mật khẩu.",
-      data: null,
+      data: [],
       error: "UPDATE_PASSWORD_ERROR",
     };
   }
