@@ -16,6 +16,7 @@ const getFilmList = async (page, limit) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể lấy thông tin phim",
@@ -40,6 +41,7 @@ const getFilmInfo = async (filmSlug) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể lấy thông tin phim",
@@ -75,6 +77,7 @@ const getFilmListSortByType = async (type, filterInfo) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể lấy thông tin phim",
@@ -110,6 +113,7 @@ const findFilm = async (findInfo) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không có kết quả tìm kiếm phù hợp",
@@ -134,6 +138,7 @@ const getFilmType = async () => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không lấy được danh sách thể loại phim",
@@ -168,6 +173,7 @@ const getFilmListByCategory = async (type, filterInfo) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể lấy thông tin phim",
@@ -192,6 +198,7 @@ const getFilmCountries = async () => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không lấy được danh sách thể loại phim",
@@ -226,6 +233,7 @@ const getFilmListByCountries = async (type, filterInfo) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể lấy thông tin phim",
@@ -260,6 +268,7 @@ const getFilmListByYear = async (year, filterInfo) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể lấy thông tin phim",

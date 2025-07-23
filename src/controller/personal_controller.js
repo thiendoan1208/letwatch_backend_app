@@ -41,6 +41,7 @@ const handleAddFilmToWatchlist = async (req, res) => {
       error: "GET_FILM_INFORMATION_ERROR",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể thêm phim vào danh sách xem.",
@@ -64,6 +65,7 @@ const handleGetFilmFromPlayList = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể lấy danh sách phim.",
@@ -87,6 +89,7 @@ const handleDeleteFilmFromWatchList = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể xóa danh sách phim.",

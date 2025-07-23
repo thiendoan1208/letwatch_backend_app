@@ -22,6 +22,7 @@ const getAllUser = async (limit, page) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Cannot get user, server error.",
@@ -50,6 +51,7 @@ const findUser = async (keyword) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Cannot find user, server error.",
@@ -104,6 +106,7 @@ const getAllContributeForm = async () => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Cannot get contribute form, server error.",
@@ -129,6 +132,7 @@ const updateContributeForm = async (formArr) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Cannot update contribute form, server error.",

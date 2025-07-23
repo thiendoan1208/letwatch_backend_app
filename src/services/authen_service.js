@@ -310,6 +310,7 @@ const recoverPassWord = async (userInfo) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Có lỗi xảy ra khi cập nhật mật khẩu.",

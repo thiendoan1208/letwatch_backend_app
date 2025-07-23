@@ -17,6 +17,7 @@ const createContributeForm = async (form) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Không thể tạo biểu mẫu.",

@@ -33,6 +33,7 @@ const handleSendVerifyCode = async (req, res) => {
   });
 
   if (error) {
+    console.log(error);
     return res.status(400).json({ error, success: false });
   }
 
@@ -65,6 +66,7 @@ const handleSignUp = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể đăng ký. Vui lòng thử lại sau.",
@@ -101,6 +103,7 @@ const handleSignIn = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể đăng nhập. Vui lòng thử lại sau.",
@@ -124,6 +127,7 @@ const handleSignOut = async (req, res) => {
       error: null,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể đăng xuất.",
@@ -156,6 +160,7 @@ const handleGetUserInfo = (req, res) => {
       error: "GET_USER_INFORMATION_ERROR",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể lấy thông tin người dùng.",
@@ -197,6 +202,7 @@ const handleRefeshToken = (req, res) => {
       error: "RENEW_ACCESS_TOKEN_ERROR",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể lấy thông tin người dùng.",
@@ -245,6 +251,7 @@ const handleRecoverPassWord = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Có lỗi xảy ra, không thể cập nhật mật khẩu.",

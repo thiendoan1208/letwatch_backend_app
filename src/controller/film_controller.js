@@ -28,6 +28,7 @@ const handleGetFilmList = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không thể lấy danh sách phim, vui lòng thử lại sau",
@@ -66,6 +67,7 @@ const handleGetFilmInfo = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không thể lấy thông tin phim, vui lòng thử lại sau",
@@ -111,6 +113,7 @@ const handleGetFilmEpisode = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không thể lấy thông tin phim, vui lòng thử lại sau",
@@ -133,6 +136,7 @@ const handleGetFilmListSortByType = async (req, res) => {
 
     return res.status(200).json(data);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không thể lấy danh sách phim, vui lòng thử lại sau",
@@ -159,6 +163,7 @@ const handleFindFilms = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không có kết quả tìm kiếm phù hợp",
@@ -183,6 +188,7 @@ const handleGetFilmType = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không tìm thấy thể loại phim",
@@ -210,6 +216,7 @@ const handleGetFilmListByType = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không tìm thấy phim",
@@ -234,6 +241,7 @@ const handleGetAllCountries = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không tìm thấy thể loại phim",
@@ -261,6 +269,7 @@ const handleGetFilmListByCountry = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không tìm thấy phim",
@@ -288,6 +297,7 @@ const handleGetFilmListByYear = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Không tìm thấy phim",

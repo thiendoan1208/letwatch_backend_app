@@ -77,17 +77,26 @@ const getFilmFromWatchList = async (userID) => {
 
 const deleteFilmFromWatchList = async (deleteInfo) => {
   try {
-    await db.UserWatchList.destroy({
-      where: {
-        movieSlug: deleteInfo.filmDeleteList,
-        userID: deleteInfo.userID,
-      },
-      raw: true,
-    });
+    if (deleteInfo.filmDeleteList.length > 0) {
+      await db.UserWatchList.destroy({
+        where: {
+          movieSlug: deleteInfo.filmDeleteList,
+          userID: deleteInfo.userID,
+        },
+        raw: true,
+      });
+
+      return {
+        success: true,
+        message: "Xóa phim thành công.",
+        data: [],
+        error: null,
+      };
+    }
 
     return {
-      success: true,
-      message: "Xóa phim thành công.",
+      success: false,
+      message: "Không có gì thay đổi.",
       data: [],
       error: null,
     };

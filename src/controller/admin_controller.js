@@ -17,6 +17,7 @@ const handleGetAllUser = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Cannot get user information",
@@ -36,6 +37,7 @@ const handleFindUser = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Cannot find user information",
@@ -55,6 +57,7 @@ const handleDeleteUser = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Cannot delete users.",
@@ -74,6 +77,7 @@ const handleGetAllContributeForm = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Cannot get contribute form",
@@ -93,6 +97,7 @@ const handleUpdateContributeForm = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Cannot update contribute form",
@@ -112,6 +117,7 @@ const handlDeleteContributeForm = async (req, res) => {
       error: data.error,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Cannot delete contribute form",
