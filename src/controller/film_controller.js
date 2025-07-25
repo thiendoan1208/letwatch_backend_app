@@ -98,17 +98,26 @@ const handleGetFilmEpisode = async (req, res) => {
         return episode.slug === episodeSlug;
       });
 
-      return res.status(200).json({
-        success: data.success,
-        message: data.message,
-        data: filmEpisode,
-        error: data.error,
-      });
+      if (serverData !== undefined && filmEpisode !== undefined) {
+        return res.status(200).json({
+          success: data.success,
+          message: data.message,
+          data: filmEpisode,
+          error: data.error,
+        });
+      } else {
+        return res.status(200).json({
+          success: data.success,
+          message: data.message,
+          data: [],
+          error: data.error,
+        });
+      }
     } else {
       return res.status(200).json({
         success: data.success,
         message: data.message,
-        data: data.data.episodes[0].server_data[0],
+        data: [],
         error: data.error,
       });
     }
@@ -117,7 +126,7 @@ const handleGetFilmEpisode = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Không thể lấy thông tin phim, vui lòng thử lại sau",
-      data: null,
+      data: [],
       error: {
         code: "SERVER_ERROR",
         details: "Không thể kết nối đến server",

@@ -221,6 +221,10 @@ const handleCheckRecoverCode = (req, res) => {
   let userEmail = req.body.email;
 
   if (String(saveCode) === String(userVerifyCode)) {
+    res.cookie("recover-email", userEmail, {
+      maxAge: 60 * 60 * 1000,
+      httpOnly: true,
+    });
     return res.status(200).json({
       success: true,
       message: "Mã xác minh đã khớp",
@@ -244,6 +248,7 @@ const handleRecoverPassWord = async (req, res) => {
     let userInfo = req.body;
     let data = await recoverPassWord(userInfo);
 
+    res.clearCookie("recover-email");
     return res.status(200).json({
       success: data.success,
       message: data.message,

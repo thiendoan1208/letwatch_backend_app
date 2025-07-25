@@ -45,7 +45,7 @@ const getFilmInfo = async (filmSlug) => {
     return {
       success: false,
       message: "Không thể lấy thông tin phim",
-      data: null,
+      data: [],
       error: {
         code: "SERVER_ERROR",
         details: "Không thể kết nối đến server",
