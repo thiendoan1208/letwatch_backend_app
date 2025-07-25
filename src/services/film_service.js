@@ -156,7 +156,7 @@ const getFilmListByCategory = async (type, filterInfo) => {
     // reconstruct url
     let newInfo = {};
     for (const [key, value] of Object.entries(filterInfo)) {
-      if (key && value !== "") {
+      if (key && value !== "" && value !== "no") {
         newInfo[key] = value;
       }
     }
