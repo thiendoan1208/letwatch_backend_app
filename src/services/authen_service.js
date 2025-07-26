@@ -7,7 +7,6 @@ const {
   verifyJWT,
   createRefreshToken,
 } = require("../middleware/jwt");
-const { where } = require("sequelize");
 config();
 
 const checkEmailDB = async (email) => {
@@ -275,7 +274,7 @@ const reNewAccessToken = (refresh_token) => {
 
     return {
       success: true,
-      message: "re-new token thành công",
+      message: "Làm mới token thành công",
       data: {
         access_token: newAcessToken,
       },
@@ -285,7 +284,7 @@ const reNewAccessToken = (refresh_token) => {
 
   return {
     success: false,
-    message: "Không re-new được token.",
+    message: "Không làm mới được token.",
     data: null,
     error: "RENEW_ACCESS_TOKEN_ERROR",
   };

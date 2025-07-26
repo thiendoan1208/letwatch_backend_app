@@ -197,7 +197,7 @@ const handleRefeshToken = (req, res) => {
 
     return res.status(200).json({
       success: false,
-      message: "Không re-new dc access_token",
+      message: "Không làm mới được access_token",
       data: [],
       error: "RENEW_ACCESS_TOKEN_ERROR",
     });

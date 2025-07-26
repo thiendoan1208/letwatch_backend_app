@@ -46,7 +46,7 @@ const findUser = async (keyword) => {
 
     return {
       success: true,
-      message: "find user successfully.",
+      message: "Find user successfully.",
       data: data,
       error: null,
     };
@@ -127,7 +127,7 @@ const updateContributeForm = async (formArr) => {
 
     return {
       success: true,
-      message: "update contribute form successfully.",
+      message: "Update contribute form status successfully.",
       data: [],
       error: null,
     };
