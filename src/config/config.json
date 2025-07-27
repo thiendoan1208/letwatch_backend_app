@@ -3,26 +3,36 @@
     "username": "root",
     "password": "letwatch1208",
     "database": "letwatch_database",
-    "host": "localhost",
-    "port": "8080",
+    "host": "159.65.135.157",
+    "port": 8080,
     "dialect": "mysql",
     "logging": false,
     "define": {
-      "freezeTableName": true 
+      "freezeTableName": true
     }
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "password": "letwatch1208",
+    "database": "letwatch_database",
+    "host": "159.65.135.157",
+    "port": 8080,
+    "dialect": "mysql",
+    "logging": false,
+    "define": {
+      "freezeTableName": true
+    }
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "password": "letwatch1208",
+    "database": "letwatch_database",
+    "host": "159.65.135.157",
+    "port": 8080,
+    "dialect": "mysql",
+    "logging": false,
+    "define": {
+      "freezeTableName": true
+    }
   }
 }
