@@ -88,10 +88,12 @@ const handleSignIn = async (req, res) => {
     if (data && data.success) {
       res.cookie("access_token", data.data.accessTokenJWT, {
         httpOnly: true,
+        sameSite: "None",
         maxAge: 60 * 60 * 1000,
       });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
+        sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
     }
