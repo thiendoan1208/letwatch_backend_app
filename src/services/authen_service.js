@@ -150,8 +150,9 @@ const signIn = async (userInfo) => {
             email: userInfoDB.email,
             role: userInfoDB.roleID,
           };
+          
           let accessTokenJWT = createAccessToken(payload);
-          let publicLoggedTokenJWT = createRefreshToken({ logged: true });
+          let publicLoggedTokenJWT = createAccessToken({ logged: true });
           let refreshTokenJWT = createRefreshToken(payload);
 
           return {
@@ -274,11 +275,16 @@ const reNewAccessToken = (refresh_token) => {
       role: checkRefreshToken.role,
     });
 
+    let newLoggedToken = createAccessToken({
+      logged: true,
+    });
+
     return {
       success: true,
       message: "Làm mới token thành công",
       data: {
         access_token: newAcessToken,
+        logged_token: newLoggedToken,
       },
       error: null,
     };

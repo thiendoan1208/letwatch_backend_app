@@ -94,7 +94,7 @@ const handleSignIn = async (req, res) => {
       });
       res.cookie("logged", data.data.publicLoggedTokenJWT, {
         httpOnly: false,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: 60 * 60 * 1000,
       });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
@@ -199,8 +199,9 @@ const handleRefeshToken = (req, res) => {
   try {
     let refresh_token = req.cookies.refresh_token;
     let access_token = req.cookies.access_token;
+    let logged_token = req.cookies.logged;
 
-    if (refresh_token && !access_token) {
+    if (refresh_token && !access_token && !logged_token) {
       let data = reNewAccessToken(refresh_token);
 
       if (data && data.success) {
@@ -208,6 +209,11 @@ const handleRefeshToken = (req, res) => {
           httpOnly: true,
           sameSite: "None",
           secure: true,
+          maxAge: 60 * 60 * 1000,
+        });
+
+        res.cookie("logged", data.data.logged_token, {
+          httpOnly: false,
           maxAge: 60 * 60 * 1000,
         });
       }
