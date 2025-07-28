@@ -180,13 +180,16 @@ const handleGetUserInfo = (req, res) => {
 const handleRefeshToken = (req, res) => {
   try {
     let refresh_token = req.cookies.refresh_token;
+    let access_token = req.cookies.access_token;
 
-    if (refresh_token) {
+    if (refresh_token && !access_token) {
       let data = reNewAccessToken(refresh_token);
 
       if (data && data.success) {
         res.cookie("access_token", data.data.access_token, {
           httpOnly: true,
+          sameSite: "None",
+          secure: true,
           maxAge: 60 * 60 * 1000,
         });
       }
