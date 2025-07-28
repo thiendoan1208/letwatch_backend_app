@@ -92,6 +92,10 @@ const handleSignIn = async (req, res) => {
         secure: true,
         maxAge: 60 * 60 * 1000,
       });
+      res.cookie("logged", data.data.publicLoggedTokenJWT, {
+        httpOnly: false,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
         sameSite: "None",
@@ -126,6 +130,10 @@ const handleSignOut = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+    });
+
+    res.clearCookie("logged", {
+      httpOnly: false,
     });
 
     res.clearCookie("refresh_token", {

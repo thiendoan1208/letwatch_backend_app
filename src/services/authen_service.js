@@ -151,6 +151,7 @@ const signIn = async (userInfo) => {
             role: userInfoDB.roleID,
           };
           let accessTokenJWT = createAccessToken(payload);
+          let publicLoggedTokenJWT = createRefreshToken({ logged: true });
           let refreshTokenJWT = createRefreshToken(payload);
 
           return {
@@ -158,6 +159,7 @@ const signIn = async (userInfo) => {
             message: "Đăng nhập thành công.",
             data: {
               refreshTokenJWT,
+              publicLoggedTokenJWT,
               accessTokenJWT,
               userInfoDB: {
                 id: userInfoDB.id,
