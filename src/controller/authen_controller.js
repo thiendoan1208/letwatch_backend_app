@@ -122,8 +122,18 @@ const handleSignIn = async (req, res) => {
 
 const handleSignOut = async (req, res) => {
   try {
-    await res.clearCookie("access_token");
-    await res.clearCookie("refresh_token");
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
+
+    res.clearCookie("refresh_token", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
+
     return res.status(200).json({
       success: true,
       message: "Đăng xuất thành công.",
