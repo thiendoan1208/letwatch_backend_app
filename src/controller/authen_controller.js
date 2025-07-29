@@ -94,8 +94,6 @@ const handleSignIn = async (req, res) => {
       });
       res.cookie("logged", data.data.publicLoggedTokenJWT, {
         httpOnly: false,
-        sameSite: "None",
-        secure: true,
         maxAge: 60 * 60 * 1000,
       });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
@@ -136,8 +134,6 @@ const handleSignOut = async (req, res) => {
 
     res.clearCookie("logged", {
       httpOnly: false,
-      sameSite: "None",
-      secure: true,
     });
 
     res.clearCookie("refresh_token", {
@@ -218,8 +214,6 @@ const handleRefeshToken = (req, res) => {
 
         res.cookie("logged", data.data.logged_token, {
           httpOnly: false,
-          sameSite: "None",
-          secure: true,
           maxAge: 60 * 60 * 1000,
         });
       }
