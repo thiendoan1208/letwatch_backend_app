@@ -90,18 +90,21 @@ const handleSignIn = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
+        domain: process.env.FRONTEND_DOMAIN,
         maxAge: 60 * 60 * 1000,
       });
       res.cookie("logged", data.data.publicLoggedTokenJWT, {
         httpOnly: true,
         sameSite: "None",
         secure: true,
+        domain: process.env.FRONTEND_DOMAIN,
         maxAge: 60 * 60 * 1000,
       });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
         sameSite: "None",
         secure: true,
+        domain: process.env.FRONTEND_DOMAIN,
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
     }
@@ -132,18 +135,21 @@ const handleSignOut = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: process.env.FRONTEND_DOMAIN,
     });
 
     res.clearCookie("logged", {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: process.env.FRONTEND_DOMAIN,
     });
 
     res.clearCookie("refresh_token", {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: process.env.FRONTEND_DOMAIN,
     });
 
     return res.status(200).json({
@@ -213,6 +219,7 @@ const handleRefeshToken = (req, res) => {
           httpOnly: true,
           sameSite: "None",
           secure: true,
+          domain: process.env.FRONTEND_DOMAIN,
           maxAge: 60 * 60 * 1000,
         });
 
@@ -220,6 +227,7 @@ const handleRefeshToken = (req, res) => {
           httpOnly: true,
           sameSite: "None",
           secure: true,
+          domain: process.env.FRONTEND_DOMAIN,
           maxAge: 60 * 60 * 1000,
         });
       }
@@ -259,8 +267,11 @@ const handleCheckRecoverCode = (req, res) => {
 
   if (String(saveCode) === String(userVerifyCode)) {
     res.cookie("recover-email", userEmail, {
-      maxAge: 60 * 60 * 1000,
       httpOnly: true,
+      sameSite: "None",
+      secure: true,
+      domain: process.env.FRONTEND_DOMAIN,
+      maxAge: 60 * 60 * 1000,
     });
     return res.status(200).json({
       success: true,
@@ -285,7 +296,12 @@ const handleRecoverPassWord = async (req, res) => {
     let userInfo = req.body;
     let data = await recoverPassWord(userInfo);
 
-    res.clearCookie("recover-email");
+    res.clearCookie("recover-email", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+      domain: process.env.FRONTEND_DOMAIN,
+    });
     return res.status(200).json({
       success: data.success,
       message: data.message,
