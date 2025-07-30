@@ -90,21 +90,21 @@ const handleSignIn = async (req, res) => {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-
+        domain: ".letwatch.net",
         maxAge: 60 * 60 * 1000,
       });
       res.cookie("logged", data.data.publicLoggedTokenJWT, {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-
+        domain: ".letwatch.net",
         maxAge: 60 * 60 * 1000,
       });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
         sameSite: "None",
         secure: true,
-
+        domain: ".letwatch.net",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
     }
@@ -135,18 +135,21 @@ const handleSignOut = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: ".letwatch.net",
     });
 
     res.clearCookie("logged", {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: ".letwatch.net",
     });
 
     res.clearCookie("refresh_token", {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: ".letwatch.net",
     });
 
     return res.status(200).json({
@@ -216,7 +219,7 @@ const handleRefeshToken = (req, res) => {
           httpOnly: true,
           sameSite: "None",
           secure: true,
-
+          domain: ".letwatch.net",
           maxAge: 60 * 60 * 1000,
         });
 
@@ -224,7 +227,7 @@ const handleRefeshToken = (req, res) => {
           httpOnly: true,
           sameSite: "None",
           secure: true,
-
+          domain: ".letwatch.net",
           maxAge: 60 * 60 * 1000,
         });
       }
@@ -267,7 +270,7 @@ const handleCheckRecoverCode = (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
-
+      domain: ".letwatch.net",
       maxAge: 60 * 60 * 1000,
     });
     return res.status(200).json({
@@ -297,6 +300,7 @@ const handleRecoverPassWord = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: ".letwatch.net",
     });
     return res.status(200).json({
       success: data.success,
