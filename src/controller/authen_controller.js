@@ -93,13 +93,6 @@ const handleSignIn = async (req, res) => {
         domain: ".letwatch.net",
         maxAge: 60 * 60 * 1000,
       });
-      res.cookie("logged", data.data.publicLoggedTokenJWT, {
-        httpOnly: true,
-        sameSite: "None",
-        secure: true,
-        domain: ".letwatch.net",
-        maxAge: 60 * 60 * 1000,
-      });
       res.cookie("refresh_token", data.data.refreshTokenJWT, {
         httpOnly: true,
         sameSite: "None",
@@ -132,13 +125,6 @@ const handleSignIn = async (req, res) => {
 const handleSignOut = async (req, res) => {
   try {
     res.clearCookie("access_token", {
-      httpOnly: true,
-      sameSite: "None",
-      secure: true,
-      domain: ".letwatch.net",
-    });
-
-    res.clearCookie("logged", {
       httpOnly: true,
       sameSite: "None",
       secure: true,
@@ -209,21 +195,12 @@ const handleRefeshToken = (req, res) => {
   try {
     let refresh_token = req.cookies.refresh_token;
     let access_token = req.cookies.access_token;
-    let logged_token = req.cookies.logged;
 
     if (refresh_token && !access_token && !logged_token) {
       let data = reNewAccessToken(refresh_token);
 
       if (data && data.success) {
         res.cookie("access_token", data.data.access_token, {
-          httpOnly: true,
-          sameSite: "None",
-          secure: true,
-          domain: ".letwatch.net",
-          maxAge: 60 * 60 * 1000,
-        });
-
-        res.cookie("logged", data.data.logged_token, {
           httpOnly: true,
           sameSite: "None",
           secure: true,
